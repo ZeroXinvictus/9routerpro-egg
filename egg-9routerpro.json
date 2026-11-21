@@ -1,0 +1,71 @@
+{
+  "meta": {
+    "version": "PTDL_v2",
+    "update_url": null
+  },
+  "exported_at": "2026-11-21T00:00:00+00:00",
+  "name": "9Router Pro",
+  "author": "admin@example.com",
+  "description": "9Router: AI router and token saver. One OpenAI-compatible endpoint with auto-fallback across subscription, cheap and free providers, plus a web dashboard.",
+  "features": null,
+  "docker_images": {
+    "9Router Pro": "ghcr.io/zeroxinvictus/9routerpro-egg:latest"
+  },
+  "file_denylist": [],
+  "startup": "start-9router",
+  "config": {
+    "files": "{}",
+    "startup": "{\"done\": \"9router ready on port\"}",
+    "logs": "{}",
+    "stop": "^C"
+  },
+  "scripts": {
+    "installation": {
+      "script": "#!/bin/ash\nmkdir -p /mnt/server/data\n",
+      "container": "ghcr.io/pterodactyl/installers:alpine",
+      "entrypoint": "ash"
+    }
+  },
+  "variables": [
+    {
+      "name": "Dashboard Password",
+      "description": "Password for the first dashboard login. Change it again inside the dashboard afterwards.",
+      "env_variable": "INITIAL_PASSWORD",
+      "default_value": "",
+      "user_viewable": false,
+      "user_editable": false,
+      "rules": "required|string|min:6|max:64",
+      "field_type": "text"
+    },
+    {
+      "name": "Public URL",
+      "description": "Alamat publik panel ini, contoh https://router.domain.com atau http://IP:PORT. Kosongkan untuk pakai alamat internal.",
+      "env_variable": "BASE_URL",
+      "default_value": "",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "nullable|string|max:255",
+      "field_type": "text"
+    },
+    {
+      "name": "Require API Key",
+      "description": "Require a Bearer API key on /v1/* routes. Keep true when the port is public.",
+      "env_variable": "REQUIRE_API_KEY",
+      "default_value": "true",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|in:true,false",
+      "field_type": "text"
+    },
+    {
+      "name": "Secure Auth Cookie",
+      "description": "Set true only when the dashboard is served over HTTPS through a reverse proxy.",
+      "env_variable": "AUTH_COOKIE_SECURE",
+      "default_value": "false",
+      "user_viewable": true,
+      "user_editable": true,
+      "rules": "required|string|in:true,false",
+      "field_type": "text"
+    }
+  ]
+}
